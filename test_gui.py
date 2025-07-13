@@ -16,6 +16,7 @@ def test_gui_fixes():
         return False
     
     # Test that the class can be instantiated (without actually running the GUI)
+    root = None
     try:
         import tkinter as tk
         root = tk.Tk()
@@ -46,14 +47,16 @@ def test_gui_fixes():
         assert hasattr(gui, 'disable_action_buttons'), "Missing disable_action_buttons method"
         print("✓ Enable/disable action button methods exist")
         
-        root.destroy()
+        if root is not None:
+            root.destroy()
         print("✓ All tests passed!")
         return True
         
     except Exception as e:
         print(f"✗ Error during testing: {e}")
         try:
-            root.destroy()
+            if root is not None:
+                root.destroy()
         except:
             pass
         return False
